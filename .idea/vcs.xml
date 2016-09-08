@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="C:\wamp\www\company\coy\company2.0\app\lib\ezSQL" vcs="Git" />
   </component>
 </project>
