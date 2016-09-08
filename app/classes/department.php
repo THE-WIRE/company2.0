@@ -7,7 +7,7 @@
  * Time: 3:05 AM
  */
 
-require_once('config.php');
+require_once('../config/config.php');
 
 class Department
 {
