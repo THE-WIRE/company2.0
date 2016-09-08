@@ -6,6 +6,8 @@
  * Date: 09-09-2016
  * Time: 01:17
  */
+
+require_once (../config/config.php);
 class Shot extends Sequence
 {
     protected $shot_name = null;
