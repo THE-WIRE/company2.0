@@ -6,6 +6,7 @@
  * Time: 01:30 AM
  */
 require_once ('../config/config.php');
+require_once ('project.php');
 class Asset extends Project
 {
     public $asset_id=null;
@@ -196,3 +197,5 @@ class Asset extends Project
         return $this->complexity;
     }
 }
+
+
