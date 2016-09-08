@@ -31,7 +31,7 @@ class Asset extends Project
 
     public function create($asset_id,$asset_name,$asset_code,$asset_desc,$asset_type,$complexity)
     {
-        $query="INSERT INTO `Asset_Master`(`Project_ID`,`Asset_ID`,`Asset_Name`,`Asset_Code`,`Asset_Desc`,`Asset_Type`,`Complexity`) VALUES(`$this->project_id`,`$asset_id`,`$asset_name`,`$asset_code`,`$asset_desc`,`$asset_type`,`$complexity`)";
+        $query="INSERT INTO `Asset_Master`(`Project_ID`,`Asset_ID`,`Asset_Name`,`Asset_Code`,`Asset_Desc`,`Asset_Type`,`Complexity`) VALUES('$this->project_id','$asset_id','$asset_name','$asset_code','$asset_desc','$asset_type','$complexity')";
         if($db->query($query)){
             $this->setAssetId($asset_id);
             $this->setAssetName($asset_name);
@@ -60,7 +60,7 @@ class Asset extends Project
 
     public function update($asset_name,$asset_code,$asset_desc,$asset_type,$complexity)
     {
-        $query = "UPDATE `Asset_Master` SET 'Asset_Name'=`$asset_name`,`Asset_Code`=`$asset_code`,`Asset_Description`=`$asset_desc`,`Asset_Type`=`$asset_type`,`Complexity`=`$complexity` WHERE `Asset_ID`=`$this->asset_i$this->d`"
+        $query = "UPDATE `Asset_Master` SET `Asset_Name`='$asset_name',`Asset_Code`='$asset_code',`Asset_Description`='$asset_desc',`Asset_Type`='$asset_type',`Complexity`='$complexity' WHERE `Asset_ID`='$this->asset_id'";
         if($db->query($query))
         {
             return true;
