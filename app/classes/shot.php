@@ -8,6 +8,7 @@
  */
 
 require_once (../config/config.php);
+
 class Shot extends Sequence
 {
     protected $shot_name = null;
@@ -244,7 +245,7 @@ class Shot extends Sequence
     }
 
 
-
+echo "Hello";
 
 
 }
