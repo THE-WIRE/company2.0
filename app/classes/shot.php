@@ -7,7 +7,7 @@
  * Time: 01:17
  */
 
-require_once (../config/config.php);
+require_once ('../config/config.php');
 
 class Shot extends Sequence
 {
