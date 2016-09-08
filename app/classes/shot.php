@@ -9,6 +9,7 @@
 
 require_once ('../config/config.php');
 
+
 class Shot extends Sequence
 {
     protected $shot_name = null;
@@ -18,6 +19,7 @@ class Shot extends Sequence
     protected $frames = null;
     protected $seconds = null;
     protected $char = null;
+    protected $set = null;
     protected $prop = null;
     protected $complexity = null;
 
@@ -31,8 +33,37 @@ class Shot extends Sequence
         }
     }
 
-    public function create($shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $prop, $complexity){
-        $query = "INSERT INTO `Shot_Master`() VALUES('$shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $prop, $complexity')";
+
+    public function retrieve(){
+
+        $query = "SELECT * FROM `Shot_Master`";
+        if($res = $db->get_row($query)){
+            $this->setShotId($res->Shot_ID);
+            $this->setShotName($res->Shot_Name);
+            $this->setShotDesc($res->Shot_Desc);
+            $this->setShotLeng($res->Shot_Leng);
+            $this->setFrames($res->Frames);
+            $this->setSeconds($res->Seconds);
+            $this->setChar($res->Char_Count);
+            $this->setSet($res->Set_Set);
+            $this->setProp($res->Prop_Count);
+            $this->setComplexity($res->Complexity);
+        }else{
+            throw new Exception("Failed to retrive information. Database Error");
+        }
+    }
+
+    public function retrieve_all(){
+        $query = "SELECT * FROM `Shot_Master`";
+
+        if($res = $db->get_results($query)){
+            return $res;
+        }else{
+            throw new Exception("Failed to retrive all information. Database Error");
+        }
+    }
+    public function create($shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $set, $prop, $complexity){
+        $query = "INSERT INTO `Shot_Master`('Shot_Name, Shot_ID, Shot_Desc, Shot_Leng, Frames, Seconds, Char_Count, Set_Count, Prop_Count, Complexity') VALUES('$shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $set, $prop, $complexity')";
 
         if($db->query($query)){
             $this->setShotId($shot_id);
@@ -60,7 +91,7 @@ class Shot extends Sequence
         }
     }
 
-    public function update($shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $prop, $complexity){
+    public function update($shot_name, $shot_id, $shot_desc, $shot_leng, $frames, $seconds, $char, $set, $prop, $complexity){
         $query = "UPDATE `Shot_Master` SET('this->$shot_name, this->$shot_id, this->$shot_desc, this->$shot_leng, this->$frames, this->$seconds, this->$char, this->$prop, this->$complexity')";
 
         if($db->query($query)){
@@ -126,6 +157,14 @@ class Shot extends Sequence
     public function getChar()
     {
         return $this->char;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSet()
+    {
+        return $this->set;
     }
 
     /**
@@ -201,6 +240,14 @@ class Shot extends Sequence
     }
 
     /**
+     * @param null $set
+     */
+    public function setSet($set)
+    {
+        $this->set = $set;
+    }
+
+    /**
      * @param null $prop
      */
     public function setProp($prop)
@@ -216,36 +263,10 @@ class Shot extends Sequence
         $this->complexity = $complexity;
     }
 
-    private function retrieve(){
-
-        $query = "SELECT * FROM `Shot_Master`";
-        if($res = db->get_row($query)){
-            $this->shot_name = $res->shot_name;
-            $this->shot_id = $res->shot_id;
-            $this->shot_desc = $res->shot_desc;
-            $this->shot_leng = $res->shot_leng;
-            $this->frames = $res->frames;
-            $this->seconds = $res->seconds;
-            $this->char = $res->char;
-            $this->prop = $res->prop;
-            $this->complexity = $res->complexity;
-        }else{
-            throw new Exception("Failed to retrive information. Database Error");
-        }
-    }
-
-    private function retrieve_all(){
-        $query = "SELECT * FROM `Shot_Master`";
-
-        if($res = $db->get_results($query)){
-            return $res;
-        }else{
-            throw new Exception("Failed to retrive all information. Database Error");
-        }
-    }
 
 
-echo "Hello";
+
+
 
 
 }
