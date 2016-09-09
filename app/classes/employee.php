@@ -5,6 +5,7 @@
  * Date: 09-09-2016
  * Time: 04:33 AM
  */
+require_once ('../config/config.php');
 class Employee extends Emp_Role
 {
     protected $emp_id=null;
