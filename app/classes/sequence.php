@@ -6,48 +6,56 @@
  * Date: 09-09-2016
  * Time: 03:30
  */
+require_once ('../config/config.php');
+require_once ('Project.php');
 class Sequence extends Project
 {
     protected $seq_id = null;
     protected $seq_name = null;
 
-    public function create($dept_id, $dept_name, $dept_desc){
 
-        $query = "INSERT INTO `Sequence_Master`(`Sequence_ID`, `Sequence_Name`)".
-            "VALUES('$seq_id', '$seq_name')";
+    function __construct($seq_id = null)
+    {
+        if($seq_id != null){
+            $this->retrieve();
+        }
+    }
+
+    public function create($seq_id, $seq_name){
+
+        $query = "INSERT INTO `Sequence_Master`(`Sequence_ID`, `Sequence_Name`)"." VALUES(`$seq_id`, `$seq_name`)";
 
         if($db->query($query)){
-
+            $this->setSeqId($seq_id);
+            $this->setSeqName($seq_name);
         }
         else{
-            throw new Exception('Unable to create new Department with Dept ID:' . $dept_id);
+            throw new Exception('Unable to create new Sequence with Seq ID:' . $seq_id);
         }
 
     }
 
     public function delete(){
 
-        $query = "DELETE FROM `Department_Master` WHERE `Dept_ID` = '$this->dept_id'";
+        $query = "DELETE FROM `Sequence_Master` WHERE `Seq_ID` = '$this->seq_id'";
 
         if($db->query($query)){
             return true;
         }
         else{
-            throw new Exception('Unable to delete Department with Dept ID:' . $this->dept_id);
+            throw new Exception('Unable to delete Sequence with Seq ID:' . $this->seq_id);
         }
     }
 
-    public function update($dept_name, $dept_desc){
+    public function update($seq_id, $seq_name){
 
-
-
-        $query = "UPDATE `Department_Master` SET `Dept_Name` = '$dept_name', `Dept_Description` = '$dept_desc' WHERE `Dept_ID` = '$this->dept_id'";
+        $query = "UPDATE `Sequence_Master` SET `Sequence_Name` = '$seq_name' WHERE `Sequence_ID` = '$this->seq_id'";
 
         if($db->query($query)){
             return true;
         }
         else{
-            throw new Exception('Unable to update Department with Dept ID:' . $this->dept_id);
+            throw new Exception('Unable to update Sequence with Seq ID:' . $this->seq_id);
         }
     }
 
@@ -82,5 +90,30 @@ class Sequence extends Project
     public function setSeqName($seq_name)
     {
         $this->seq_name = $seq_name;
+    }
+
+
+    private function retrieve($seq_id, $seq_name){
+
+            $query = "SELECT * FROM `Sequence_Master` WHERE `Sequence_ID` = `$this->seq_id`";
+
+            if($res = $db->get_row($query)){
+                $this->setSeqId($res->Sequence_ID);
+                $this->setSeqName($res->Sequence_Name);
+            }else{
+                throw new Exception("Unable to retrieve Sequence with ID".$seq_id);
+            }
+    }
+
+    public function retrieveall()
+    {
+        $query = "SELECT * FROM `Sequence_Master`";
+
+        if($res = $db->get_results($query)){
+            return $res;
+        }
+        else{
+            throw new Exception("Unable to retrieve Sequence with ID".$seq_id);
+        }
     }
 }

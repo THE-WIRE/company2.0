@@ -8,7 +8,7 @@
  */
 
 require_once ('../config/config.php');
-
+require_once ('Sequence.php');
 
 class Shot extends Sequence
 {
@@ -85,7 +85,7 @@ class Shot extends Sequence
         $query = "DELETE FROM `Shot_Master` WHERE(`shot_id = $shot_id`)";
 
         if($db->query($query)){
-
+                return true;
         }else{
             throw new Exception("Failed to delete Shot with '.$shot_id.' ID. Database Error ");
         }
@@ -95,7 +95,7 @@ class Shot extends Sequence
         $query = "UPDATE `Shot_Master` SET('this->$shot_name, this->$shot_id, this->$shot_desc, this->$shot_leng, this->$frames, this->$seconds, this->$char, this->$prop, this->$complexity')";
 
         if($db->query($query)){
-
+                return true;
         }else{
             throw new Exception("Failed to update with '.$shot_id.' ID. Database Error");
         }
