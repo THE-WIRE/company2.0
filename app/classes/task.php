@@ -7,6 +7,7 @@
  * Time: 15:39
  */
 require_once ("../config/config.php");
+require_once("subdepartment.php");
 
 class Task extends SubDepartment
 {
@@ -43,7 +44,7 @@ class Task extends SubDepartment
     }
 
     public function update($task_id, $t_start_date, $t_end_date, $total_time, $version){
-        $query = "UPDATE `Task_Master` SET `Task_ID` = '$task_id', `Start_Date` = '$t_start_date',`End_Date` = `$t_end_date`, `Total_Time` = `$total_time`, `Version` = `$version`A");
+        $query = "UPDATE `Task_Master` SET `Task_ID` = '$task_id', `Start_Date` = '$t_start_date',`End_Date` = `$t_end_date`, `Total_Time` = `$total_time`, `Version` = `$version`A";
 
         if($db->query($query)){
             return true;
