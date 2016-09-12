@@ -9,9 +9,7 @@
 require_once('../lib/ezSQL/shared/ez_sql_core.php');
 require_once('../lib/ezSQL/mysqli/ez_sql_mysqli.php');
 
-define('DBUSER', 'u401895710_ucoy');
-define('DBPASS', 'Success@1996');
-define('DBNAME', 'u401895710_coy');
-define('DBHOST', 'localhost');
-
-$db = new ezSQL_mysqli(DBUSER, DBPASS, DBNAME, DBHOST);
+define('DBUSER', 'sql6135354');
+define('DBPASS', 'YUyakjacK4');
+define('DBNAME', 'sql6135354');
+define('DBHOST', 'sql6.freemysqlhosting.net');
