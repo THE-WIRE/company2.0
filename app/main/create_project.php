@@ -260,7 +260,7 @@
                                                             </div>
                                                         </header>
                                                         <div class="body">
-                                                            <table class="table table-bordered table-lg mt-lg mb-0">
+                                                            <table class="table table-striped table-lg mt-lg mb-0">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>
