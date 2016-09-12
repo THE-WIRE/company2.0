@@ -3,8 +3,8 @@
 <head>
     <title>Light Blue - Responsive Admin Dashboard Template</title>
 
-    <link href="css/application.css" rel="stylesheet">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link href="assets/css/application.css" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -185,10 +185,10 @@
 
 <!-- page specific scripts -->
 <!-- page libs -->
-<script src="lib/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="assets/lib/slimScroll/jquery.slimscroll.min.js"></script>
 
 <!-- page application js -->
-<script src="js/index.js"></script>
+<script src="assets/js/index.js"></script>
 
 <!-- page template -->
 
