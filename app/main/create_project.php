@@ -544,7 +544,7 @@
                                                                             <tr>
                                                                                 <td>1</td>
                                                                                 <td>Mark</td>
-                                                                                <td>Otto</td>
+                                                                                <td>Webber</td>
                                                                                 <td><a href="#">ottoto@example.com</a></td>
                                                                                 <td><span class="badge bg-gray-lighter text-gray fw-semi-bold">Pending</span></td>
                                                                             </tr>
