@@ -145,7 +145,7 @@
                         <div class="body">
                             <div id="wizard" class="form-wizard">
                                 <ul class="wizard-navigation nav-justified">
-                                    <li><a href="#tab1" data-toggle="tab"><small>1.</small><strong> Project Details</strong></a></li>
+                                    <li><a href="#tab1" data-toggle="tab"><small>1.</small><strong>Project Details</strong></a></li>
                                     <li><a href="#tab2" data-toggle="tab"><small>2.</small> <strong>Budget Plan</strong></a></li>
                                     <li><a href="#tab3" data-toggle="tab"><small>3.</small> <strong>Role Assign</strong></a></li>
                                     <li><a href="#tab4" data-toggle="tab"><small>4.</small> <strong>List Project</strong></a></li>
