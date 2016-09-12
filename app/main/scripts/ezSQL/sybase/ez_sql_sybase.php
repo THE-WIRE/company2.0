@@ -1,37 +1,38 @@
 <?php
 
+	sybase_min_server_severity(20);
 
 	/**********************************************************************
-	*  Author: ashank (ashank@gmail.com)
-	*  Web...: http://twitter.com/justinvincent
-	*  Name..: ezSQL_mssql
-	*  Desc..: Microsoft Sql Server component (part of ezSQL databse abstraction library) - based on ezSql_mySql library class.
+	*  Author: Muhammad Iyas (iyasilias@gmail.com)
+	*  Web...: 
+	*  Name..: ezSQL_sybase
+	*  Desc..: Sybase ASE component (part of ezSQL database abstraction library) - based on ezSql_mssql library class.
 	*
 	*/
 
 	/**********************************************************************
-	*  ezSQL error strings - mssql
+	*  ezSQL error strings - sybase
 	*/
 
-	global $ezsql_mssql_str;
+	global $ezsql_sybase_str;
 	
-	$ezsql_mssql_str = array
+	$ezsql_sybase_str = array
 	(
 		1 => 'Require $dbuser and $dbpassword to connect to a database server',
-		2 => 'Error establishing mssql database connection. Correct user/password? Correct hostname? Database server running?',
+		2 => 'Error establishing sybase database connection. Correct user/password? Correct hostname? Database server running?',
 		3 => 'Require $dbname to select a database',
 		4 => 'SQL Server database connection is not active',
 		5 => 'Unexpected error while trying to select database'
 	);
 
 	/**********************************************************************
-	*  ezSQL Database specific class - mssql
+	*  ezSQL Database specific class - sybase
 	*/
 
-	if ( ! function_exists ('mssql_connect') ) die('<b>Fatal Error:</b> ezSQL_mssql requires ntwdblib.dll to be present in your winowds\system32 folder. Also enable MS-SQL extenstion in PHP.ini file ');
-	if ( ! class_exists ('ezSQLcore') ) die('<b>Fatal Error:</b> ezSQL_mssql requires ezSQLcore (ez_sql_core.php) to be included/loaded before it can be used');
+	if ( ! function_exists ('sybase_connect') ) die('<b>Fatal Error:</b> ezSQL_sybase requires ntwdblib.dll to be present in your winowds\system32 folder. Also enable sybase extenstion in PHP.ini file ');
+	if ( ! class_exists ('ezSQLcore') ) die('<b>Fatal Error:</b> ezSQL_sybase requires ezSQLcore (ez_sql_core.php) to be included/loaded before it can be used');
 
-	class ezSQL_mssql extends ezSQLcore
+	class ezSQL_sybase extends ezSQLcore
 	{
 
 		var $dbuser = false;
@@ -39,28 +40,28 @@
 		var $dbname = false;
 		var $dbhost = false;
 		var $rows_affected = false;
-
-		//if we want to convert Queries in MySql syntax to MS-SQL syntax. Yes, there
+		
+		//if we want to convert Queries in MySql syntax to Sybase syntax. Yes, there
 		//are some differences in query syntax.
-		var $convertMySqlToMSSqlQuery = TRUE;
+		var $convertMySqlTosybaseQuery = TRUE;
 
 		/**********************************************************************
 		*  Constructor - allow the user to perform a quick connect at the
-		*  same time as initialising the ezSQL_mssql class
+		*  same time as initialising the ezSQL_sybase class
 		*/
 
-		function ezSQL_mssql($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost', $convertMySqlToMSSqlQuery=true)
+		function ezSQL_sybase($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost', $convertMySqlTosybaseQuery=true)
 		{
 			$this->dbuser = $dbuser;
 			$this->dbpassword = $dbpassword;
 			$this->dbname = $dbname;
 			$this->dbhost = $dbhost;
-			$this->convertMySqlToMSSqlQuery = $convertMySqlToMSSqlQuery;
+			$this->convertMySqlTosybaseQuery = $convertMySqlTosybaseQuery;
 		}
 
 		/**********************************************************************
-		*  Short hand way to connect to mssql database server
-		*  and select a mssql database at the same time
+		*  Short hand way to connect to sybase database server
+		*  and select a sybase database at the same time
 		*/
 
 		function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
@@ -73,25 +74,25 @@
 		}
 
 		/**********************************************************************
-		*  Try to connect to mssql database server
+		*  Try to connect to sybase database server
 		*/
 
 		function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 		{
-			global $ezsql_mssql_str; $return_val = false;
+			global $ezsql_sybase_str; $return_val = false;
 
 			// Must have a user and a password
 			if ( ! $dbuser )
 			{
-				$this->register_error($ezsql_mssql_str[1].' in '.__FILE__.' on line '.__LINE__);
-				$this->show_errors ? trigger_error($ezsql_mssql_str[1],E_USER_WARNING) : null;
+				$this->register_error($ezsql_sybase_str[1].' in '.__FILE__.' on line '.__LINE__);
+				$this->show_errors ? trigger_error($ezsql_sybase_str[1],E_USER_WARNING) : null;
 			}
 			// Try to establish the server database handle
 
-			else if ( ! $this->dbh = @mssql_connect($dbhost,$dbuser,$dbpassword) )
+			else if ( ! $this->dbh = @sybase_connect($dbhost,$dbuser,$dbpassword) )
 			{
-				$this->register_error($ezsql_mssql_str[2].' in '.__FILE__.' on line '.__LINE__);
-				$this->show_errors ? trigger_error($ezsql_mssql_str[2],E_USER_WARNING) : null;
+				$this->register_error($ezsql_sybase_str[2].' in '.__FILE__.' on line '.__LINE__);
+				$this->show_errors ? trigger_error($ezsql_sybase_str[2],E_USER_WARNING) : null;
 			}
 			else
 			{
@@ -107,32 +108,32 @@
 		}
 
 		/**********************************************************************
-		*  Try to select a mssql database
+		*  Try to select a sybase database
 		*/
 
 		function select($dbname='')
 		{
-			global $ezsql_mssql_str; $return_val = false;
+			global $ezsql_sybase_str; $return_val = false;
 
 			// Must have a database name
 			if ( ! $dbname )
 			{
-				$this->register_error($ezsql_mssql_str[3].' in '.__FILE__.' on line '.__LINE__);
-				$this->show_errors ? trigger_error($ezsql_mssql_str[3],E_USER_WARNING) : null;
+				$this->register_error($ezsql_sybase_str[3].' in '.__FILE__.' on line '.__LINE__);
+				$this->show_errors ? trigger_error($ezsql_sybase_str[3],E_USER_WARNING) : null;
 			}
 
 			// Must have an active database connection
 			else if ( ! $this->dbh )
 			{
-				$this->register_error($ezsql_mssql_str[4].' in '.__FILE__.' on line '.__LINE__);
-				$this->show_errors ? trigger_error($ezsql_mssql_str[4],E_USER_WARNING) : null;
+				$this->register_error($ezsql_sybase_str[4].' in '.__FILE__.' on line '.__LINE__);
+				$this->show_errors ? trigger_error($ezsql_sybase_str[4],E_USER_WARNING) : null;
 			}
 
 			// Try to connect to the database
 
-			else if ( !@mssql_select_db($dbname,$this->dbh) )
+			else if ( !@sybase_select_db($dbname,$this->dbh) )
 			{
-				$str = $ezsql_mssql_str[5];
+				$str = $ezsql_sybase_str[5];
 
 				$this->register_error($str.' in '.__FILE__.' on line '.__LINE__);
 				$this->show_errors ? trigger_error($str,E_USER_WARNING) : null;
@@ -147,7 +148,7 @@
 		}
 
 		/**********************************************************************
-		*  Format a mssql string correctly for safe mssql insert
+		*  Format a sybase string correctly for safe sybase insert
 		*  (no mater if magic quotes are on or not)
 		*/
 
@@ -162,8 +163,8 @@
 		}
 
 		/**********************************************************************
-		*  Return mssql specific system date syntax
-		*  i.e. Oracle: SYSDATE mssql: NOW(), MS-SQL : getDate()
+		*  Return sybase specific system date syntax
+		*  i.e. Oracle: SYSDATE sybase: getDate()
 		*/
 
 		function sysdate()
@@ -172,16 +173,16 @@
 		}
 
 		/**********************************************************************
-		*  Perform mssql query and try to detirmin result value
+		*  Perform sybase query and try to detirmin result value
 		*/
 
 		function query($query)
 		{
 
-			//if flag to convert query from MySql syntax to MS-Sql syntax is true
+			//if flag to convert query from MySql syntax to Sybase syntax is true
 			//convert the query
-			if($this->convertMySqlToMSSqlQuery == true)
-				$query = $this->ConvertMySqlToMSSql($query);
+			if($this->convertMySqlTosybaseQuery == true)
+				$query = $this->ConvertMySqlTosybase($query);
 
 
 
@@ -221,9 +222,9 @@
 
 
 
-			// Perform the query via std mssql_query function..
+			// Perform the query via std sybase_query function..
 
-			$this->result = @mssql_query($query, $this->dbh);
+			$this->result = @sybase_query($query);
 
 
 
@@ -232,14 +233,14 @@
 			{
 
 				$get_errorcodeSql = "SELECT @@ERROR as errorcode";
-				$error_res = @mssql_query($get_errorcodeSql, $this->dbh);
-				$errorCode = @mssql_result($error_res, 0, "errorcode");
+				$error_res = @sybase_query($get_errorcodeSql, $this->dbh);
+				$errorCode = @sybase_result($error_res, 0, "errorcode");
 
 				$get_errorMessageSql = "SELECT severity as errorSeverity, text as errorText FROM sys.messages  WHERE message_id = ".$errorCode  ;
-				$errormessage_res =  @mssql_query($get_errorMessageSql, $this->dbh);
+				$errormessage_res =  @sybase_query($get_errorMessageSql, $this->dbh);
 				if($errormessage_res)
 				{
-					$errorMessage_Row = @mssql_fetch_row($errormessage_res);
+					$errorMessage_Row = @sybase_fetch_row($errormessage_res);
 					$errorSeverity = $errorMessage_Row[0];
 					$errorMessage = $errorMessage_Row[1];
 				}
@@ -255,20 +256,21 @@
 
 
 			// Query was an insert, delete, update, replace
+			$is_insert = false;
 			if ( preg_match("/^(insert|delete|update|replace)\s+/i",$query) )
 			{
 				$is_insert = true;
-				$this->rows_affected = @mssql_rows_affected($this->dbh);
+				$this->rows_affected = @sybase_rows_affected($this->dbh);
 
 				// Take note of the insert_id
 				if ( preg_match("/^(insert|replace)\s+/i",$query) )
 				{
 
-					$identityresultset = @mssql_query("select SCOPE_IDENTITY()");
+					$identityresultset = @sybase_query("select SCOPE_IDENTITY()");
 
 					if ($identityresultset != false )
 					{
-						$identityrow = @mssql_fetch_row($identityresultset);
+						$identityrow = @sybase_fetch_row($identityresultset);
 						$this->insert_id = $identityrow[0];
 					}
 
@@ -280,13 +282,12 @@
 			// Query was a select
 			else
 			{
-				$is_insert = false;
 
 				// Take note of column info
 				$i=0;
-				while ($i < @mssql_num_fields($this->result))
+				while ($i < @sybase_num_fields($this->result))
 				{
-					$this->col_info[$i] = @mssql_fetch_field($this->result);
+					$this->col_info[$i] = @sybase_fetch_field($this->result);
 					$i++;
 
 				}
@@ -294,7 +295,7 @@
 				// Store Query Results
 				$num_rows=0;
 
-				while ( $row = @mssql_fetch_object($this->result) )
+				while ( $row = @sybase_fetch_object($this->result) )
 				{
 
 					// Store relults as an objects within main array
@@ -302,7 +303,7 @@
 					$num_rows++;
 				}
 
-				@mssql_free_result($this->result);
+				@sybase_free_result($this->result);
 
 				// Log number of rows the query returned
 				$this->num_rows = $num_rows;
@@ -324,7 +325,7 @@
 
 
 		/**********************************************************************
-		*  Convert a Query From MySql Syntax to MS-Sql syntax
+		*  Convert a Query From MySql Syntax to Sybase syntax
 		   Following conversions are made:-
 		   1. The '`' character used for MySql queries is not supported - the character is removed.
 		   2. FROM_UNIXTIME method is not supported. The Function is removed.It is replaced with
@@ -334,38 +335,39 @@
 
 		   Note: This method is only a small attempt to convert the syntax. There are many aspects which are not covered here.
 		   		This method doesn't at all guarantee complete conversion. Certain queries will still
-		   		not work. e.g. MS SQL requires all columns in Select Clause to be present in 'group by' clause.
-		   		There is no such restriction in MySql.
+		   		not work.
 		*/
 
-		function ConvertMySqlToMSSql($query)
+		function ConvertMySqlTosybase($query)
 		{
 
 
 			//replace the '`' character used for MySql queries, but not
-			//supported in MS-Sql
+			//supported in Sybase
 
 			$query = str_replace("`", "", $query);
 
-			//replace From UnixTime command in MS-Sql, doesn't work
+			//replace From UnixTime command in Sybase, doesn't work
 
-			$pattern = "FROM_UNIXTIME\(([^/]{0,})\)";
+			$pattern = "/FROM_UNIXTIME\(([^\/]{0,})\)/i";
 			$replacement = "getdate()";
 			//ereg($pattern, $query, $regs);
 			//we can get the Unix Time function parameter value from this string
 			//$valueInsideFromUnixTime = $regs[1];
 
-			$query = eregi_replace($pattern, $replacement, $query);
+			$query = preg_replace($pattern, $replacement, $query);
 
 
-			//replace LIMIT keyword. Works only on MySql not on MS-Sql
+			//replace LIMIT keyword. Works only on MySql not on Sybase
 			//replace it with TOP keyword
 
-			$pattern = "LIMIT[^\w]{1,}([0-9]{1,})([\,]{0,})([0-9]{0,})";
+			$pattern = "/LIMIT[^\w]{1,}([0-9]{1,})([\,]{0,})([0-9]{0,})/i";
 			$replacement = "";
-			eregi($pattern, $query, $regs);
-			$query = eregi_replace($pattern, $replacement, $query);
+			preg_match($pattern, $query, $regs);
 
+			$query = preg_replace($pattern, $replacement, $query);
+
+			if(count($regs) > 0):
 			if($regs[2])
 				$query = str_ireplace("SELECT ", "SELECT TOP ".$regs[3]." ", $query);
 			else
@@ -373,12 +375,12 @@
 				if($regs[1])
 					$query  = str_ireplace("SELECT ", "SELECT TOP ".$regs[1]." ", $query);
 				}
+			endif;
 
-
-			//replace unix_timestamp function. Doesn't work in MS-Sql
-			$pattern = "unix_timestamp\(([^/]{0,})\)";
+			//replace unix_timestamp function. Doesn't work in Sybase
+			$pattern = "/unix_timestamp\(([^\/]{0,})\)/i";
 			$replacement = "\\1";
-			$query = eregi_replace($pattern, $replacement, $query);
+			$query = preg_replace($pattern, $replacement, $query);
 
 			return $query;
 
